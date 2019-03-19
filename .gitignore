@@ -1,0 +1,15 @@
+# Don't overwrite personalized config file
+# Settings/Config.py
+
+# Don't worry about pycache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Skip the virtual environment
+VirtualEnv/
+venv/
+
+# Skip pyinstaller folders
+dist/
+build/
