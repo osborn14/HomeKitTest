@@ -1,0 +1,18 @@
+{
+  "accessory_ltpk": "7625fdb305e1a5a4bffb7f404f6d29582e3b0dd5749c13ca6282ab2c84a209f5",
+  "accessory_ltsk": "0e18e17003ac1c8d97c73a502a9e33b82a10f6b8879b8569d83a2780fef50095",
+  "accessory_pairing_id": "12:00:00:00:00:00",
+  "accessory_pin": "031-45-154",
+  "c#": 23,
+  "category": "Lightbulb",
+  "host_ip": "192.168.0.12",
+  "host_port": 8080,
+  "name": "DemoAccessory",
+  "peers": {
+    "1B4A9D3A-921B-4A48-92EC-6EE907067E59": {
+      "admin": true,
+      "key": "ae3b4817ad512f5446193d2f49d22908048bebfa8cfcc3eabc2ab9edf1c9322c"
+    }
+  },
+  "unsuccessful_tries": 0
+}
