@@ -3,7 +3,7 @@
   "accessory_ltsk": "0e18e17003ac1c8d97c73a502a9e33b82a10f6b8879b8569d83a2780fef50095",
   "accessory_pairing_id": "12:00:00:00:00:00",
   "accessory_pin": "031-45-154",
-  "c#": 23,
+  "c#": 41,
   "category": "Lightbulb",
   "host_ip": "192.168.0.12",
   "host_port": 8080,
