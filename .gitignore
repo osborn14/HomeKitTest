@@ -13,3 +13,9 @@ venv/
 # Skip pyinstaller folders
 dist/
 build/
+
+# Don't need intellij workspace
+.idea/
+
+# Leave out custom config files
+accessory.state
