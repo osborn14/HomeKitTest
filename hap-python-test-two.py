@@ -89,7 +89,7 @@ class NeoPixelLightStrip(Accessory):
 
         # Set our neopixel API services up using Lightbulb base
         serv_light = self.add_preload_service(
-            'Lightbulb', chars=['On', 'Hue', 'Saturation', 'Brightness'])
+            'Lightbulb', chars=['On', 'Hue', 'Saturation', 'Brightness', 'ProgramMode'])
 
         # Configure our callbacks
         self.char_hue = serv_light.configure_char(
@@ -100,12 +100,15 @@ class NeoPixelLightStrip(Accessory):
             'On', setter_callback=self.set_state)
         self.char_on = serv_light.configure_char(
             'Brightness', setter_callback=self.set_brightness)
+        self.char_program_mode = serv_light.configure_char(
+            'ProgramMode', setter_callback=self.set_program_mode)
 
         # Set our instance variables
         self.accessory_state = 0  # State of the neo light On/Off
         self.hue = 0  # Hue Value 0 - 360 Homekit API
         self.saturation = 100  # Saturation Values 0 - 100 Homekit API
         self.brightness = 100  # Brightness value 0 - 100 Homekit API
+        self.char_program_mode = 0
 
         # self.is_GRB = is_GRB  # Most neopixels are Green Red Blue
         # self.LED_count = LED_count
@@ -146,6 +149,9 @@ class NeoPixelLightStrip(Accessory):
     def set_saturation(self, value):
         self.saturation = value
         self.set_hue(self.hue)
+
+    def set_program_mode(self, value):
+        print(value)
 
     def update_neopixel_with_color(self, red, green, blue):
         print(red, green, blue)
