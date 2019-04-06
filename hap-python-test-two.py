@@ -1,41 +1,11 @@
-"""An example of how to setup and start an Accessory.
-This is:
-1. Create the Accessory object you want.
-2. Add it to an AccessoryDriver, which will advertise it on the local network,
-    setup a server to answer client queries, etc.
-"""
 import logging
 import signal
-import random
 
 from pyhap.accessory import Accessory, Bridge
 from pyhap.accessory_driver import AccessoryDriver
-import pyhap.loader as loader
-from pyhap import camera
-from pyhap.const import CATEGORY_SENSOR
+
 
 logging.basicConfig(level=logging.INFO, format="[%(module)s] %(message)s")
-
-
-class TemperatureSensor(Accessory):
-    """Fake Temperature sensor, measuring every 3 seconds."""
-
-    category = CATEGORY_SENSOR
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        serv_temp = self.add_preload_service('TemperatureSensor')
-        self.char_temp = serv_temp.configure_char('CurrentTemperature')
-
-    @Accessory.run_at_interval(3)
-    async def run(self):
-        self.char_temp.set_value(random.randint(18, 26))
-
-
-
-
-
 
 """
 An Accessory for Adafruit NeoPixels attached to GPIO Pin18
@@ -59,19 +29,24 @@ An Accessory for Adafruit NeoPixels attached to GPIO Pin18
  Changing State      - State
 """
 
-from neopixel import *
+import neopixel, board
 
 from pyhap.accessory import Accessory
 from pyhap.const import CATEGORY_LIGHTBULB
 
 
 class NeoPixelLightStrip(Accessory):
-
     category = CATEGORY_LIGHTBULB
 
-    def __init__(self, LED_count=50, is_GRB=True, LED_pin=18,
-                 LED_freq_hz=800000, LED_DMA=1, LED_brightness=255,
-                 LED_invert=False, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+
+        LED_count = 50
+        is_GRB = True
+        LED_pin = 18,
+        LED_freq_hz = 800000
+        LED_DMA = 1
+        LED_brightness = 255
+        LED_invert = False
 
         """
         LED_Count - the number of LEDs in the array
@@ -89,7 +64,7 @@ class NeoPixelLightStrip(Accessory):
 
         # Set our neopixel API services up using Lightbulb base
         serv_light = self.add_preload_service(
-            'Lightbulb', chars=['On', 'Hue', 'Saturation', 'Brightness', 'ProgramMode'])
+            'Lightbulb', chars=['On', 'Hue', 'Saturation', 'Brightness'])
 
         # Configure our callbacks
         self.char_hue = serv_light.configure_char(
@@ -118,9 +93,7 @@ class NeoPixelLightStrip(Accessory):
         self.LED_count = 50
         # --------------------- END TESTING ------------------------
 
-        self.neo_strip = Adafruit_NeoPixel(LED_count, LED_pin, LED_freq_hz,
-                                           LED_DMA, LED_invert, LED_brightness)
-        self.neo_strip.begin()
+        self.neo_strip = neopixel.NeoPixel(board.D18, LED_count, brightness=1, pixel_order=neopixel.GRB)
 
     def set_state(self, value):
         self.accessory_state = value
@@ -154,17 +127,11 @@ class NeoPixelLightStrip(Accessory):
         print(value)
 
     def update_neopixel_with_color(self, red, green, blue):
-        print(red, green, blue)
         for i in range(self.LED_count):
-            if(self.is_GRB):
-                self.neo_strip.setPixelColor(i, Color(int(green),
-                                                      int(red),
-                                                      int(blue)))
+            if (self.is_GRB):
+                self.neo_strip[i] = (int(green), int(red), int(blue))
             else:
-                self.neo_strip.setPixelColor(i, Color(int(red),
-                                                      int(green),
-                                                      int(blue)))
-
+                self.neo_strip[i] = (int(red), int(green), int(blue))
         self.neo_strip.show()
 
     def hsv_to_rgb(self, h, s, v):
@@ -205,6 +172,7 @@ class NeoPixelLightStrip(Accessory):
         m = v - C
 
         return int((RGB_Pri[0] + m) * 255), int((RGB_Pri[1] + m) * 255), int((RGB_Pri[2] + m) * 255)
+
 
 def get_bridge(driver):
     """Call this method to get a Bridge instead of a standalone accessory."""

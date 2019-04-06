@@ -19,3 +19,4 @@ build/
 
 # Leave out custom config files
 accessory.state
+log.txt
