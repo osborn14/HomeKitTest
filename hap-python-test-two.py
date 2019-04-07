@@ -64,7 +64,7 @@ class NeoPixelLightStrip(Accessory):
 
         # Set our neopixel API services up using Lightbulb base
         serv_light = self.add_preload_service(
-            'Lightbulb', chars=['On', 'Hue', 'Saturation', 'Brightness', 'ProgramMode'])
+            'Lightbulb', chars=['On', 'Hue', 'Saturation', 'ProgramMode'])
 
         # Configure our callbacks
         self.char_hue = serv_light.configure_char(
@@ -73,8 +73,8 @@ class NeoPixelLightStrip(Accessory):
             'Saturation', setter_callback=self.set_saturation)
         self.char_on = serv_light.configure_char(
             'On', setter_callback=self.set_state)
-        self.char_on = serv_light.configure_char(
-            'Brightness', setter_callback=self.set_brightness)
+        # self.char_on = serv_light.configure_char(
+        #     'Brightness', setter_callback=self.set_brightness)
         self.char_program_mode = serv_light.configure_char(
             'ProgramMode', setter_callback=self.set_program_mode)
 
